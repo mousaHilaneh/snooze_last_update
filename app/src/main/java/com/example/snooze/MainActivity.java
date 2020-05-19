@@ -3,26 +3,58 @@ package com.example.snooze;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.SeekBar;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+	private SeekBar backSeekBar;
+	private EditText backEditText;
+	private SeekBar seatSeekBar;
+	private EditText seatEditText;
+	private SeekBar feetSeekBar;
+	private EditText feetEditText;
+
+
+	private ImageView colorp;
+	private View preview;
+
 
 	private MediaPlayer mMediaPlayer;
-
 	private AudioManager mAudioManager;
-
 	boolean playing = false;
 
 	private View decorView;
+
+
+	@Override
+	public void onSensorChanged(SensorEvent sensorEvent) {
+		backSeekBar.setProgress(backSeekBar.getProgress());
+		seatSeekBar.setProgress(seatSeekBar.getProgress());
+		feetSeekBar.setProgress(feetSeekBar.getProgress());
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int i) {
+
+	}
+
 
 
 	private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
@@ -76,91 +108,181 @@ public class MainActivity extends AppCompatActivity {
 		});
 
 
-		ImageView sittingPos = findViewById(R.id.sitting_pos_button);
-		sittingPos.setOnClickListener(new View.OnClickListener() {
+		colorp = findViewById(R.id.color_picker);
+		preview = findViewById(R.id.test);
+
+		colorp.setDrawingCacheEnabled(true);
+		colorp.buildDrawingCache(true);
+
+		colorp.setOnTouchListener(new View.OnTouchListener() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
+			public boolean onTouch(View view, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+					Bitmap bitmap = colorp.getDrawingCache();
+
+					int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
+
+					//R,G,B
+					int r = Color.red(pixel);
+					int g = Color.green(pixel);
+					int b = Color.blue(pixel);
+
+					//get Hex value
+					String hex = "#" + Integer.toHexString(pixel);
+					//test color preview
+					preview.setBackgroundColor(Color.rgb(r, g, b));
+
+				}
+				return true;
 			}
 		});
 
-		ImageView layingPos = findViewById(R.id.laying_pos_button);
-		layingPos.setOnClickListener(new View.OnClickListener() {
+		backSeekBar = findViewById(R.id.back_seekBar);
+		backEditText = findViewById(R.id.back_editText);
+		backEditText.setText("" + backSeekBar.getProgress());
+
+		backSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+				backEditText.setText("" + progress);
+
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+
 			}
 		});
 
-		ImageView zeroPos = findViewById(R.id.zerogravity_pos_button3);
-		zeroPos.setOnClickListener(new View.OnClickListener() {
+		seatSeekBar = findViewById(R.id.seat_seekBar);
+		seatEditText = findViewById(R.id.seat_editText);
+		seatEditText.setText("" + seatSeekBar.getProgress());
+
+		seatSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+				seatEditText.setText(""+progress);
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+
 			}
 		});
 
-		ImageView stopButton = findViewById(R.id.stop);
-		stopButton.setOnClickListener(new View.OnClickListener() {
+		feetSeekBar = findViewById(R.id.feet_seekBar);
+		feetEditText = (EditText)findViewById(R.id.feet_editText);
+		feetEditText.setText("" + feetSeekBar.getProgress());
+
+		feetSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+				feetEditText.setText(""+progress);
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+
 			}
 		});
 
-		ImageView savePosButton = findViewById(R.id.save_pos);
-		savePosButton.setOnClickListener(new View.OnClickListener() {
+		backEditText.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				String in = backEditText.getText().toString();
+				int grad = Integer.parseInt(in);
+				backSeekBar.setProgress(grad);
+				if (grad < 0){
+					backEditText.setText(0);
+				}
+				int  limit = 0;
+				if (grad > 87){
+					backEditText.setText((""+limit));
+				}
+			}
+
+			@Override
+			public void afterTextChanged(Editable editable) {
+
 			}
 		});
 
-		ImageView posButton1 = findViewById(R.id.open_pos1);
-		posButton1.setOnClickListener(new View.OnClickListener() {
+		backEditText.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				String in = backEditText.getText().toString();
+				int grad = Integer.parseInt(in);
+				backSeekBar.setProgress(grad);
+				int  limit = 0;
+				if (grad > 30){
+					backEditText.setText((""+limit));
+				}
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable editable) {
+
 			}
 		});
 
-		ImageView posButton2 = findViewById(R.id.open_pos2);
-		posButton2.setOnClickListener(new View.OnClickListener() {
+		feetEditText.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
 			}
-		});
 
-		ImageView posButton3 = findViewById(R.id.open_pos3);
-		posButton3.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				String in = feetEditText.getText().toString();
+				int grad = Integer.parseInt(in);
+				feetSeekBar.setProgress(grad);
+				int  limit = 0;
+				if (grad > 90){
+					feetEditText.setText((""+limit));
+				}
+
 			}
-		});
 
-
-		ImageView openButton2 = findViewById(R.id.open2);
-		openButton2.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
-			}
-		});
+			public void afterTextChanged(Editable editable) {
 
-
-		ImageView saveButton2 = findViewById(R.id.save_position2);
-		saveButton2.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "worked", Toast.LENGTH_SHORT).show();
 			}
 		});
 
 
+		ImageView sittingPosButton = findViewById(R.id.sitting_pos_button);
+		ImageView layingPosButton = findViewById(R.id.laying_pos_button);
+		ImageView zeroGravityPosButton = findViewById(R.id.zerogravity_pos_button3);
 
 
+
+		// MeditationList
 		final ArrayList<Topic> topics = new ArrayList<>();
 		topics.add(new Topic("Rain", R.drawable.rain, R.raw.rain));
 		topics.add(new Topic("Stream", R.drawable.stream, R.raw.stream));
@@ -215,6 +337,33 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
+
+		layingPosButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				backSeekBar.setProgress(0);
+				seatSeekBar.setProgress(0);
+				feetSeekBar.setProgress(90);
+			}
+		});
+
+		sittingPosButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				backSeekBar.setProgress(87);
+				seatSeekBar.setProgress(0);
+				feetSeekBar.setProgress(0);
+			}
+		});
+
+		zeroGravityPosButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				backSeekBar.setProgress(60);
+				seatSeekBar.setProgress(25);
+				feetSeekBar.setProgress(25);
+			}
+		});
 	}
 
 	@Override
@@ -259,4 +408,5 @@ public class MainActivity extends AppCompatActivity {
 				| View.SYSTEM_UI_FLAG_FULLSCREEN
 				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 	}
+
 }

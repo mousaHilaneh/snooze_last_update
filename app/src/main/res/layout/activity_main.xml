@@ -17,7 +17,7 @@
         android:background="#263E55">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/choose_pos_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -41,7 +41,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/sitting"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/choose_pos_text" />
 
         <ImageView
             android:id="@+id/laying_pos_button"
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/back_editText"
             android:layout_width="60dp"
             android:layout_height="64dp"
             android:layout_marginTop="4dp"
@@ -99,7 +99,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/seat_editText"
             android:layout_width="60dp"
             android:layout_height="64dp"
             android:layout_marginTop="4dp"
@@ -113,10 +113,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.46"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seekBar_back" />
+            app:layout_constraintTop_toBottomOf="@+id/back_seekBar" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/feet_editText"
             android:layout_width="60dp"
             android:layout_height="64dp"
             android:layout_marginTop="4dp"
@@ -130,10 +130,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.46"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seekBar_seat" />
+            app:layout_constraintTop_toBottomOf="@+id/seat_seekBar" />
 
         <SeekBar
-            android:id="@+id/seekBar_back"
+            android:id="@+id/back_seekBar"
             android:layout_width="216dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -142,10 +142,10 @@
             android:thumb="@drawable/thumb"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText4" />
+            app:layout_constraintTop_toBottomOf="@+id/back_editText" />
 
         <SeekBar
-            android:id="@+id/seekBar_seat"
+            android:id="@+id/seat_seekBar"
             android:layout_width="216dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -154,10 +154,10 @@
             android:thumb="@drawable/thumb"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText5" />
+            app:layout_constraintTop_toBottomOf="@+id/seat_editText" />
 
         <SeekBar
-            android:id="@+id/seekBar_foot"
+            android:id="@+id/feet_seekBar"
             android:layout_width="216dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -166,7 +166,7 @@
             android:thumb="@drawable/thumb"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/feet_editText" />
 
         <ImageView
             android:id="@+id/stop"
@@ -240,8 +240,8 @@
             android:textColor="#F0F0F0"
             android:textSize="24sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@+id/seekBar_foot"
-            app:layout_constraintStart_toEndOf="@+id/editText" />
+            app:layout_constraintBottom_toTopOf="@+id/feet_seekBar"
+            app:layout_constraintStart_toEndOf="@+id/feet_editText" />
 
         <TextView
             android:id="@+id/textView7"
@@ -253,8 +253,8 @@
             android:textColor="#F0F0F0"
             android:textSize="24sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@+id/seekBar_seat"
-            app:layout_constraintStart_toEndOf="@+id/editText5" />
+            app:layout_constraintBottom_toTopOf="@+id/seat_seekBar"
+            app:layout_constraintStart_toEndOf="@+id/seat_editText" />
 
         <TextView
             android:id="@+id/textView6"
@@ -266,8 +266,8 @@
             android:textColor="#F0F0F0"
             android:textSize="24sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@+id/seekBar_back"
-            app:layout_constraintStart_toEndOf="@+id/editText4" />
+            app:layout_constraintBottom_toTopOf="@+id/back_seekBar"
+            app:layout_constraintStart_toEndOf="@+id/back_editText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -387,7 +387,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/color_picker"
             android:layout_width="252dp"
             android:layout_height="252dp"
             android:layout_marginStart="16dp"
@@ -407,6 +407,15 @@
             android:src="@drawable/logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/test"
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="28dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
