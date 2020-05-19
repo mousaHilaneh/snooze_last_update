@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 			}
 		});
 
-		backEditText.addTextChangedListener(new TextWatcher() {
+		seatEditText.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -235,12 +235,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 			@Override
 			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-				String in = backEditText.getText().toString();
+				String in = seatEditText.getText().toString();
 				int grad = Integer.parseInt(in);
-				backSeekBar.setProgress(grad);
+				seatSeekBar.setProgress(grad);
 				int  limit = 0;
 				if (grad > 30){
-					backEditText.setText((""+limit));
+					seatEditText.setText((""+limit));
 				}
 
 			}
@@ -279,6 +279,49 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 		ImageView sittingPosButton = findViewById(R.id.sitting_pos_button);
 		ImageView layingPosButton = findViewById(R.id.laying_pos_button);
 		ImageView zeroGravityPosButton = findViewById(R.id.zerogravity_pos_button3);
+
+
+		layingPosButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				backSeekBar.setProgress(0);
+				seatSeekBar.setProgress(0);
+				feetSeekBar.setProgress(90);
+			}
+		});
+
+		sittingPosButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				backSeekBar.setProgress(87);
+				seatSeekBar.setProgress(0);
+				feetSeekBar.setProgress(0);
+			}
+		});
+
+		zeroGravityPosButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				backSeekBar.setProgress(60);
+				seatSeekBar.setProgress(25);
+				feetSeekBar.setProgress(25);
+			}
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -338,33 +381,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 			}
 		});
 
-		layingPosButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				backSeekBar.setProgress(0);
-				seatSeekBar.setProgress(0);
-				feetSeekBar.setProgress(90);
-			}
-		});
 
-		sittingPosButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				backSeekBar.setProgress(87);
-				seatSeekBar.setProgress(0);
-				feetSeekBar.setProgress(0);
-			}
-		});
-
-		zeroGravityPosButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				backSeekBar.setProgress(60);
-				seatSeekBar.setProgress(25);
-				feetSeekBar.setProgress(25);
-			}
-		});
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	@Override
 	protected void onStop() {
