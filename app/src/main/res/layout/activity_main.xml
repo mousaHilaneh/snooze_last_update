@@ -140,7 +140,6 @@
             android:maxHeight="8dp"
             android:progressDrawable="@drawable/custom_seekbar"
             android:thumb="@drawable/thumb"
-            android:max="87"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/back_editText" />

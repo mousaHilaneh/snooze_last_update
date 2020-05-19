@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 				if (grad < 0){
 					backEditText.setText(0);
 				}
-				int  limit = 0;
+				int  limit = 87;
 				if (grad > 87){
 					backEditText.setText((""+limit));
 				}
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 				String in = seatEditText.getText().toString();
 				int grad = Integer.parseInt(in);
 				seatSeekBar.setProgress(grad);
-				int  limit = 0;
+				int  limit = 30;
 				if (grad > 30){
 					seatEditText.setText((""+limit));
 				}
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 				String in = feetEditText.getText().toString();
 				int grad = Integer.parseInt(in);
 				feetSeekBar.setProgress(grad);
-				int  limit = 0;
+				int  limit = 90;
 				if (grad > 90){
 					feetEditText.setText((""+limit));
 				}
