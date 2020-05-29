@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -276,9 +277,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 		});
 
 
+
+
+
+
+
+
+
+
+
+
 		ImageView sittingPosButton = findViewById(R.id.sitting_pos_button);
 		ImageView layingPosButton = findViewById(R.id.laying_pos_button);
 		ImageView zeroGravityPosButton = findViewById(R.id.zerogravity_pos_button3);
+		ImageView stopButton = findViewById(R.id.stop);
 
 
 		layingPosButton.setOnClickListener(new View.OnClickListener() {
@@ -305,6 +317,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 				backSeekBar.setProgress(60);
 				seatSeekBar.setProgress(25);
 				feetSeekBar.setProgress(25);
+			}
+		});
+
+		stopButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(MainActivity.this,"pressed",Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -344,7 +363,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 		meditationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
 				if(playing) {
 
 				// Release the media player if it currently exists because we are about to

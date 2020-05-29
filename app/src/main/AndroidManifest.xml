@@ -5,7 +5,7 @@
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/appiconsecond"
+        android:roundIcon="@drawable/appicon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:fullBackupContent="true"
