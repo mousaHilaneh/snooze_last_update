@@ -17,42 +17,29 @@ package com.example.snooze;
 
 
 /**
- * {@link Topic} represents a Topic that the user can choose.
+ * Topic represents a Topic that the user can choose.
  */
 
 public class Topic {
 
-    /** Default translation for the Topic */
     private String mTopicName;
-
-    /** Audio resource ID for the Topic */
     private int mAudioResourceId;
-
-    /** Image resource ID for the Topic */
     private int mImageResourceId;
-
-
-    /** Create a new Topic object */
-
 
     public Topic(String TopicName, int imageResourceId, int audioResourceId) {
         mTopicName = TopicName;
         mImageResourceId = imageResourceId;
         mAudioResourceId = audioResourceId;
     }
-
     /**
      * Get the getTopicName.
      */
-
     public String getTopicName() {
         return mTopicName;
     }
-
     /**
      * Return the image resource ID of the word.
      */
-
     public int getImageResourceId() {
         return mImageResourceId;
     }

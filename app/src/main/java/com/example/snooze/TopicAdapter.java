@@ -14,17 +14,11 @@ import androidx.annotation.NonNull;
 
 
 /**
- * {@link TopicAdapter} is an {@link ArrayAdapter} that can provide the layout for each list item
- * based on a data source, which is a list of {@link Topic} objects.
+ *  TopicAdapter is an ArrayAdapter that provides the layout for each list item
+ * based on a data source, which is a list of Topic objects.
  */
 public class TopicAdapter extends ArrayAdapter<Topic>  {
 
-    /**
-     * Create a new {@link TopicAdapter} object.
-     *
-     * @param context is the current context (i.e. Activity) that the adapter is being created in.
-     * @param topics is the list of {@link Topic}s to be displayed.
-     */
 
     TopicAdapter(Context context, ArrayList<Topic> topics) {
         super(context, 0, topics);
@@ -40,13 +34,13 @@ public class TopicAdapter extends ArrayAdapter<Topic>  {
                     R.layout.list_item, parent, false);
         }
 
-        // Get the {@link Word} object located at this position in the list
+        // Get the Topic object located at this position in the list
         Topic currentTopic = getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID name_text_view.
         TextView topicNameTextView = listItemView.findViewById(R.id.topic_name_text_view);
-        // Get the Miwok translation from the currentWord object and set this text on
-        // the Miwok TextView.
+        // Get the Topic name from the current Topic object and set this text on
+        // the Topic TextView.
         assert currentTopic != null;
         topicNameTextView.setText(currentTopic.getTopicName());
 

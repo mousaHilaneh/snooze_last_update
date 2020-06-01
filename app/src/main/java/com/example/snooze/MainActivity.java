@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -212,13 +213,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				String in = backEditText.getText().toString();
 				int grad = Integer.parseInt(in);
-				backSeekBar.setProgress(grad);
-				if (grad < 0){
+				if(in.isEmpty()) {
 					backEditText.setText(0);
 				}
-				int  limit = 87;
-				if (grad > 87){
-					backEditText.setText((""+limit));
+				else {
+					backSeekBar.setProgress(grad);
+					if (grad < 0) {
+						backEditText.setText(0);
+					}
+					int limit = 87;
+					if (grad > 87) {
+						backEditText.setText(("" + limit));
+					}
 				}
 			}
 
@@ -353,49 +359,93 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 		topics.add(new Topic("Waves", R.drawable.waves_beach, R.raw.waves_beach));
 
 		TopicAdapter adapter = new TopicAdapter(MainActivity.this, topics);
-		ListView meditationList = findViewById(R.id.meditation_list);
+		final ListView meditationList = findViewById(R.id.meditation_list);
 		meditationList.setAdapter(adapter);
 
 
 		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
+
+		final ImageButton playButton = findViewById(R.id.play_button);
+		ImageButton nextButton = findViewById(R.id.next_button);
+		ImageButton previousButton = findViewById(R.id.previous_button);
+		final ImageView topicImageView = findViewById(R.id.topic_imagView);
+		final ImageView bluetoothButton = findViewById(R.id.bluetooth_button);
+		final ImageView spotifyButton = findViewById(R.id.spotify_button);
+
+
+		playButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(playing) {
+					mMediaPlayer.pause();
+					playButton.setBackgroundResource(R.drawable.play_arrow);
+					topicImageView.setVisibility(View.INVISIBLE);
+					bluetoothButton.setVisibility(View.VISIBLE);
+					spotifyButton.setVisibility(View.VISIBLE);
+				}
+				else {
+					if(mMediaPlayer == null) {
+						playButton.setBackgroundResource(R.drawable.pause);
+						topicImageView.setVisibility(View.VISIBLE);
+						bluetoothButton.setVisibility(View.INVISIBLE);
+						spotifyButton.setVisibility(View.INVISIBLE);
+						Topic topic = topics.get(0);
+						topicImageView.setBackgroundResource(topic.getImageResourceId());
+						int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+						// Start the audio file
+						if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+							mMediaPlayer = MediaPlayer.create(MainActivity.this, topic.getAudioResourceId());
+							// Start the audio file
+							mMediaPlayer.start();
+							// Setup a listener on the media player, so that we can stop and release the
+							// media player once the sound has finished playing.
+							mMediaPlayer.setOnCompletionListener(mCompletionListener);
+						}
+
+					}else {
+						playButton.setBackgroundResource(R.drawable.pause);
+						topicImageView.setVisibility(View.VISIBLE);
+						bluetoothButton.setVisibility(View.INVISIBLE);
+						spotifyButton.setVisibility(View.INVISIBLE);
+						mMediaPlayer.start();
+					}
+				}
+				playing = !playing;
+			}
+		});
+
+
+
 		// Set a click listener to play the audio when the list item is clicked on
 		meditationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-				if(playing) {
-
+				playButton.setBackgroundResource(R.drawable.pause);
+				topicImageView.setVisibility(View.VISIBLE);
+				bluetoothButton.setVisibility(View.INVISIBLE);
+				spotifyButton.setVisibility(View.INVISIBLE);
+				if (!playing) {
+					playing = !playing;
+				}
 				// Release the media player if it currently exists because we are about to
 				// play a different sound file
 				releaseMediaPlayer();
-				}
-				else {
-
-					// Release the media player if it currently exists because we are about to
-					// play a different sound file
-					releaseMediaPlayer();
-
-					// Get the {@link Word} object at the given position the user clicked on
-					Topic topic = topics.get(position);
-
-					int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
-							AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
+				// Get the {@link Word} object at the given position the user clicked on
+				Topic topic = topics.get(position);
+				ImageView topicImageView = findViewById(R.id.topic_imagView);
+				topicImageView.setImageResource(topic.getImageResourceId());
+				int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+						AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+				// Start the audio file
+				if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+					mMediaPlayer = MediaPlayer.create(MainActivity.this, topic.getAudioResourceId());
 					// Start the audio file
-					if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-
-						mMediaPlayer = MediaPlayer.create(MainActivity.this, topic.getAudioResourceId());
-
-						// Start the audio file
-						mMediaPlayer.start();
-
-						// Setup a listener on the media player, so that we can stop and release the
-						// media player once the sound has finished playing.
-						mMediaPlayer.setOnCompletionListener(mCompletionListener);
-					}
+					mMediaPlayer.start();
+					// Setup a listener on the media player, so that we can stop and release the
+					// media player once the sound has finished playing.
+					mMediaPlayer.setOnCompletionListener(mCompletionListener);
 				}
-				playing = !playing;
-
 			}
 		});
 
