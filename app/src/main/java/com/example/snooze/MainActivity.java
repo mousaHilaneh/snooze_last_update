@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 	private EditText seatEditText;
 	private SeekBar feetSeekBar;
 	private EditText feetEditText;
+	private boolean saveOnOff = false;
+	private ArrayList<FavoritePosition> favoritePositions = new ArrayList<>();
+	FavoritePosition number1= new FavoritePosition();
+	FavoritePosition number2 = new FavoritePosition();
+	FavoritePosition number3 = new FavoritePosition();
 
 
 	private ImageView colorp;
@@ -330,6 +335,88 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(MainActivity.this,"pressed",Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		ImageView savePosButton = findViewById(R.id.save_pos);
+		savePosButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				if(!saveOnOff){
+					saveOnOff = true;
+					Toast.makeText(MainActivity.this,"You can save your favourite Positons",Toast.LENGTH_SHORT).show();
+
+				}else{
+					saveOnOff = false;
+					Toast.makeText(MainActivity.this,"You can choose your favourite Positons",Toast.LENGTH_SHORT).show();
+
+				}
+
+			}
+		});
+
+		ImageView posButton1 = findViewById(R.id.open_pos1);
+		posButton1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				if(saveOnOff==true){
+
+					System.out.println("bin drin");
+
+					number1.name = "Position1";
+					number1.back = backEditText.getText().toString();
+					number1.seat = seatEditText.getText().toString();
+					number1.foot = feetEditText.getText().toString();
+
+					Toast.makeText(MainActivity.this,"Position1 saved",Toast.LENGTH_SHORT).show();
+
+				}else {
+					//NUED Funktion -- Werte ausgeben
+					Toast.makeText(MainActivity.this,"Position1 selected",Toast.LENGTH_SHORT).show();
+
+				}
+			}
+		});
+
+		ImageView posButton2 = findViewById(R.id.open_pos2);
+		posButton2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(saveOnOff==true){
+
+					number2.name = "Position2";
+					number2.back = backEditText.getText().toString();
+					number2.seat = seatEditText.getText().toString();
+					number2.foot = feetEditText.getText().toString();
+					Toast.makeText(MainActivity.this,"Position2 saved",Toast.LENGTH_SHORT).show();
+
+				}else {
+					//NUED Funktion -- Werte ausgeben
+					Toast.makeText(MainActivity.this,"Position2 selected",Toast.LENGTH_SHORT).show();
+
+				}
+			}
+		});
+
+		ImageView posButton3 = findViewById(R.id.open_pos3);
+		posButton3.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(saveOnOff==true){
+
+					number3.name = "Position3";
+					number3.back = backEditText.getText().toString();
+					number3.seat = seatEditText.getText().toString();
+					number3.foot = feetEditText.getText().toString();
+					Toast.makeText(MainActivity.this,"Position3 saved",Toast.LENGTH_SHORT).show();
+
+				}else {
+					//NUED Funktion -- Werte ausgeben
+					Toast.makeText(MainActivity.this,"Position3 selected",Toast.LENGTH_SHORT).show();
+
+				}
 			}
 		});
 
