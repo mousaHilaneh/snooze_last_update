@@ -263,8 +263,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 					if (grad < 0) {
 						seatEditText.setText(0);
 					}
-					int limit = 87;
-					if (grad > 87) {
+					int limit = 30;
+					if (grad > 30) {
 						seatEditText.setText(("" + limit));
 					}
 				}catch (Exception e) {
@@ -299,8 +299,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 					if (grad < 0) {
 						feetEditText.setText(0);
 					}
-					int limit = 87;
-					if (grad > 87) {
+					int limit = 90;
+					if (grad > 90) {
 						feetEditText.setText(("" + limit));
 					}
 				}catch (Exception e) {
