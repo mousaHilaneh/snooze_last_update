@@ -246,6 +246,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 		seatEditText.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				String in = seatEditText.getText().toString();
 				seatEditText.setSelection(seatEditText.getText().length());
 				try {
@@ -265,11 +270,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 				}catch (Exception e) {
 					boolean usableInt = false;
 				}
-			}
-
-			@Override
-			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
 
 			}
 
