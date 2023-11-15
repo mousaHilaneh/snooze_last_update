@@ -217,11 +217,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 			@Override
 			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				String in = backEditText.getText().toString();
+				backEditText.setSelection(backEditText.getText().length());
+				try {
+					Integer.parseInt(backEditText.getText().toString());
+
+
 				int grad = Integer.parseInt(in);
-				if(in.isEmpty()) {
-					backEditText.setText(0);
-				}
-				else {
+
 					backSeekBar.setProgress(grad);
 					if (grad < 0) {
 						backEditText.setText(0);
@@ -230,6 +232,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 					if (grad > 87) {
 						backEditText.setText(("" + limit));
 					}
+			}catch (Exception e) {
+				boolean usableInt = false;
 				}
 			}
 
@@ -248,11 +252,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 			@Override
 			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				String in = seatEditText.getText().toString();
-				int grad = Integer.parseInt(in);
-				seatSeekBar.setProgress(grad);
-				int  limit = 30;
-				if (grad > 30){
-					seatEditText.setText((""+limit));
+				seatEditText.setSelection(seatEditText.getText().length());
+				try {
+					Integer.parseInt(seatEditText.getText().toString());
+
+
+					int grad = Integer.parseInt(in);
+
+					seatSeekBar.setProgress(grad);
+					if (grad < 0) {
+						seatEditText.setText(0);
+					}
+					int limit = 30;
+					if (grad > 30) {
+						seatEditText.setText(("" + limit));
+					}
+				}catch (Exception e) {
+					boolean usableInt = false;
 				}
 
 			}
@@ -272,11 +288,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 			@Override
 			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				String in = feetEditText.getText().toString();
-				int grad = Integer.parseInt(in);
-				feetSeekBar.setProgress(grad);
-				int  limit = 90;
-				if (grad > 90){
-					feetEditText.setText((""+limit));
+				feetEditText.setSelection(feetEditText.getText().length());
+				try {
+					Integer.parseInt(feetEditText.getText().toString());
+
+
+					int grad = Integer.parseInt(in);
+
+					feetSeekBar.setProgress(grad);
+					if (grad < 0) {
+						feetEditText.setText(0);
+					}
+					int limit = 90;
+					if (grad > 90) {
+						feetEditText.setText(("" + limit));
+					}
+				}catch (Exception e) {
+					boolean usableInt = false;
 				}
 
 			}
